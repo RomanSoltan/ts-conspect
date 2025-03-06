@@ -1456,3 +1456,125 @@ Custom Types
 
 // Оскільки name — опціональна властивість, ми можемо
 // її взагалі не вказувати в об’екті, і це не викличе помилку.
+
+/* ======================================================================================================================
+Advanced Types
+====================================================================================================================== */
+// Type Casting
+
+// Type Casting (або Type Conversion) використовується для
+// перетворення об'єкта одного типу на об'єкт іншого типу.
+
+// TypeScript використовує два синтаксичні підходи для типового
+// приведення: кутові дужки <> та оператор as.
+
+// let someValues: unknown = "this is a string";
+// let strLength1: number = (<string>someValues).length;
+// let strLength2: number = (someValues as string).length;
+// let strLength3: number = someValues.length;
+
+// export {};
+
+// У цьому прикладі ми маємо змінну someValue типу unknown, і ми
+// хочемо обробити її як рядок. Ми знаємо, що це рядок, але
+// TypeScript цього не знає. Тому ми використовуємо Type Casting
+// для уточнення типу someValue. Якщо ми цього не зробимо, то
+// отримаємо помилку, як у змінній strLength3.
+
+// Під час роботи з HTML-елементами, ми можемо отримати проблеми.
+
+// const input = document.getElementById("inputEmail");
+// input.value = "test@test.ts";
+// export {};
+
+// Спочатку TypeScript інтерпретує його як HTMLElement, у якому
+// відсутня властивість value. Але тепер нам потрібно вказати
+// правильний тип. Для цього у нас є два варіанти.
+
+// const input = <HTMLInputElement>document.getElementById("inputEmail");
+// input.value = "test@test.ts";
+
+// export {};
+
+// І є другий, більш універсальний через as.
+
+// const input = document.getElementById("inputEmail") as HTMLInputElement;
+// input.value = "test@test.ts";
+
+// export {};
+
+// Таким чином, ви можете змінювати або призначати тип у процесі
+//  виконання коду. Спробуємо видалити його зараз і призначити пізніше.
+
+// const input = document.getElementById("inputEmail");
+// if (input) {
+//   (input as HTMLInputElement).value = "test@test.ts";
+// }
+
+// export {};
+
+// Однак, коли використовується JSX (React), тільки оператор
+// as можна використати, оскільки синтаксис <Type> може бути
+// неправильно інтерпретований як JSX.
+
+// ==============================================
+
+// Index Properties
+
+// Бувають ситуації, коли ми знаємо якісь поля явно,
+// але деякі поля нам невідомі, а ми точно знаємо,
+// якого типу вони мають бути. Для цього можна
+// скористатися ось такою конструкцією:
+
+// type indexType = {
+//   [prop: string]: string;
+// };
+
+// У цьому визначенні типу, prop: string вказує, що ключі
+// мають бути рядками, а string після двокрапки вказує,
+// що значення мають бути рядками.
+
+// type Person = {
+//   name: string;
+//   [x: string]: string;
+// };
+
+// const user: Person = {
+//   name: "Alex",
+//   gender: "man",
+//   country: "Ukraine",
+// };
+
+// export {};
+
+// І тепер це буде працювати. Обов'язково потрібно вказати
+// name та будь-яку кількість інших полів.
+
+// Використання індексних властивостей дозволяє вам створювати
+// словники або карти, де ключі та значення мають певний тип.
+
+// type User = {
+//   id: string;
+//   name: string;
+//   email: string;
+// };
+
+// type Users = {
+//   [id: string]: User;
+// };
+
+// let users: Users = {};
+
+// let user: User = {
+//   id: "1",
+//   name: "Alex",
+//   email: "alex@example.com",
+// };
+
+// users[user.id] = user;
+
+// export {};
+
+// У цьому прикладі ми визначили тип Users, який містить об'єкти
+// типу User. Потім ми створили об'єкт users, який може містити
+// невідому кількість користувачів, кожен з яких може бути доступний за його id.
